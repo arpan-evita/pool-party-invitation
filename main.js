@@ -72,7 +72,9 @@ function handleSubmit() {
     method:  'POST',
     mode:    'no-cors',
     cache:   'no-cache',
-    headers: { 'Content-Type': 'application/json' },
+    // Must use text/plain — application/json triggers a preflight
+    // that Google Apps Script cannot handle, silently dropping the data.
+    headers: { 'Content-Type': 'text/plain' },
     body:    JSON.stringify(formData)
   })
   .then(() => {
@@ -119,7 +121,7 @@ function submitTxn() {
     method:  'POST',
     mode:    'no-cors',
     cache:   'no-cache',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body:    JSON.stringify(txnData)
   })
   .finally(() => {
