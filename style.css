@@ -800,16 +800,47 @@ textarea { resize:vertical; min-height:100px; }
 .btn-submit:active { transform:translateY(0); }
 .btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
-/* Confirmation */
-.confirmation {
-  display:none;
-  text-align:center;
-  padding:72px 40px;
-  background:var(--black2);
-  border:1px solid var(--border);
+/* Payment Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+
+.modal-content {
+  background: var(--black2);
+  border: 1px solid var(--border);
+  padding: 60px 40px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  text-align: center;
 }
 
-.confirmation.show { display:block; }
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: none;
+  border: none;
+  color: var(--gold-lt);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.upi-box {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(201,168,76,0.05);
+  border: 1px dashed var(--gold-dk);
+  border-radius: 4px;
+}
 
 .confirm-icon {
   width:52px; height:52px;
@@ -820,7 +851,6 @@ textarea { resize:vertical; min-height:100px; }
   align-items:center;
   justify-content:center;
 }
-
 .confirm-icon svg { width:20px; height:20px; }
 
 .confirm-title {
@@ -837,10 +867,14 @@ textarea { resize:vertical; min-height:100px; }
   font-weight:300;
   color:var(--cream-dk);
   line-height:1.8;
-  max-width:400px;
-  margin:0 auto;
   letter-spacing:0.05em;
 }
+
+@keyframes revealModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal-modal { animation: revealModal 0.5s ease both; }
 
 /* ─── FOOTER ─── */
 footer {

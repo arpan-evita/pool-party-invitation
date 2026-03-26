@@ -64,14 +64,18 @@ function handleSubmit() {
     body: JSON.stringify(formData)
   })
   .then(() => {
-    form.style.display = 'none';
-    document.getElementById('confirmation').classList.add('show');
-    window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
+    document.getElementById('payment-modal').classList.add('show');
+    btn.textContent = 'Application Sent';
+    form.reset();
   })
   .catch(error => {
     console.error('Error!', error.message);
     btn.disabled = false;
     btn.textContent = 'Error. Try Again';
   });
+}
+
+function closeModal() {
+  document.getElementById('payment-modal').classList.remove('show');
 }
 
