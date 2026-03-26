@@ -37,7 +37,7 @@ body {
 ::selection { background:var(--gold-dk); color:var(--cream); }
 
 /* ─── UTILITY ─── */
-.container { max-width:780px; margin:0 auto; padding:0 24px; }
+.container { width: 90%; max-width: 1440px; margin: 0 auto; padding: 0 24px; }
 .gold { color:var(--gold); }
 .serif { font-family:var(--ff-display); }
 
@@ -311,7 +311,7 @@ section { padding:120px 0; }
   font-weight:300;
   line-height:1.85;
   color:var(--cream-dk);
-  max-width:520px;
+  max-width:700px;
 }
 
 /* Gold rule divider */
@@ -535,7 +535,7 @@ section { padding:120px 0; }
 .form-section { background:var(--black); }
 
 .form-intro {
-  max-width:520px;
+  max-width:700px;
   margin-bottom:60px;
 }
 
