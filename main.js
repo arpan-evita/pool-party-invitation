@@ -38,8 +38,8 @@ function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
-  // Google Apps Script Web App URL (Paste your URL here after deployment)
-  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+  // Google Apps Script Web App URL
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwktAVPJzT9wr30ovbaZ_citruI7Nun-tFxgIf94CTPTbiUbeF4tfCBSeIVulKda8bsCw/exec';
 
   const formData = {
     name,
