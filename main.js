@@ -16,6 +16,7 @@ function handleSubmit() {
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const instagram = document.getElementById('instagram').value.trim();
+  const email = document.getElementById('email').value.trim(); // Added email field
   const occupation = document.getElementById('occupation').value;
   const age = document.getElementById('age').value;
   const ticket = document.querySelector('input[name="ticket"]:checked');
@@ -23,7 +24,14 @@ function handleSubmit() {
   const agree = document.getElementById('agree').checked;
   const why = document.getElementById('why').value.trim();
 
-  if (!name || !phone || !instagram || !occupation || !age || !ticket || !comfort || !agree) {
+  const tierMap = {
+    'founders': { name: 'Founders Circle', price: '9999' },
+    'curated': { name: 'Curated Access', price: '11999' },
+    'inner': { name: 'Inner Circle', price: '16666' }
+  };
+  const selectedTier = tierMap[ticket.value];
+
+  if (!name || !phone || !instagram || !email || !occupation || !age || !ticket || !comfort || !agree) {
     // Highlight missing
     const btn = document.getElementById('submit-btn');
     btn.style.background = 'rgba(180,60,60,0.8)';
@@ -46,14 +54,16 @@ function handleSubmit() {
     name,
     phone,
     instagram,
+    email,
+    tier: selectedTier.name,
+    amount: selectedTier.price,
     occupation,
     age,
     source: document.querySelector('input[name="source"]:checked')?.value || '',
     attending: document.querySelector('input[name="attending"]:checked')?.value || '',
     why,
-    ticket: ticket.value,
-    comfort: comfort.value,
-    date: new Date().toLocaleString()
+    comfort: comfort?.value || '',
+    timestamp: new Date().toISOString()
   };
 
   fetch(SCRIPT_URL, {
