@@ -74,6 +74,10 @@ function handleSubmit() {
     body: JSON.stringify(formData)
   })
   .then(() => {
+    // Capture for modal step 2 linkage BEFORE reset
+    currentSubmission.name = document.getElementById('name').value;
+    currentSubmission.phone = document.getElementById('phone').value;
+    
     document.getElementById('payment-modal').classList.add('show');
     btn.textContent = 'Application Sent';
     form.reset();
@@ -91,10 +95,6 @@ let currentSubmission = { name: '', phone: '' };
 function showStep3() {
   document.getElementById('modal-step-1').style.display = 'none';
   document.getElementById('modal-step-2').style.display = 'block';
-  
-  // Keep track of who is submitting the txn
-  currentSubmission.name = document.getElementById('name').value;
-  currentSubmission.phone = document.getElementById('phone').value;
 }
 
 function submitTxn() {
