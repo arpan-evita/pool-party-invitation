@@ -68,14 +68,14 @@ function handleSubmit() {
     timestamp: new Date().toISOString()
   };
 
+  // application/x-www-form-urlencoded is natively read by Apps Script
+  // via e.parameter — no JSON parsing needed, no preflight triggered.
   fetch(SCRIPT_URL, {
     method:  'POST',
     mode:    'no-cors',
     cache:   'no-cache',
-    // Must use text/plain — application/json triggers a preflight
-    // that Google Apps Script cannot handle, silently dropping the data.
-    headers: { 'Content-Type': 'text/plain' },
-    body:    JSON.stringify(formData)
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body:    new URLSearchParams(formData).toString()
   })
   .then(() => {
     document.getElementById('payment-modal').classList.add('show');
@@ -121,8 +121,8 @@ function submitTxn() {
     method:  'POST',
     mode:    'no-cors',
     cache:   'no-cache',
-    headers: { 'Content-Type': 'text/plain' },
-    body:    JSON.stringify(txnData)
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body:    new URLSearchParams(txnData).toString()
   })
   .finally(() => {
     document.getElementById('modal-step-2').style.display = 'none';
