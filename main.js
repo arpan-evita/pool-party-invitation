@@ -38,9 +38,39 @@ function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
-  setTimeout(() => {
+  // Google Apps Script Web App URL (Paste your URL here after deployment)
+  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+  const formData = {
+    name,
+    phone,
+    instagram,
+    occupation,
+    age,
+    source: document.querySelector('input[name="source"]:checked')?.value || '',
+    attending: document.querySelector('input[name="attending"]:checked')?.value || '',
+    why,
+    ticket: ticket.value,
+    comfort: comfort.value,
+    date: new Date().toLocaleString()
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors', // Apps Script requires no-cors for simple POST
+    cache: 'no-cache',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(() => {
     form.style.display = 'none';
     document.getElementById('confirmation').classList.add('show');
     window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
-  }, 900);
+  })
+  .catch(error => {
+    console.error('Error!', error.message);
+    btn.disabled = false;
+    btn.textContent = 'Error. Try Again';
+  });
 }
+
