@@ -85,7 +85,59 @@ function handleSubmit() {
   });
 }
 
+// Store basic info globally for Step 2 linkage
+let currentSubmission = { name: '', phone: '' };
+
+function showStep3() {
+  document.getElementById('modal-step-1').style.display = 'none';
+  document.getElementById('modal-step-2').style.display = 'block';
+  
+  // Keep track of who is submitting the txn
+  currentSubmission.name = document.getElementById('name').value;
+  currentSubmission.phone = document.getElementById('phone').value;
+}
+
+function submitTxn() {
+  const txnId = document.getElementById('txn-id').value.trim();
+  if (!txnId) return alert('Please enter your Transaction ID');
+  
+  const btn = document.getElementById('btn-confirm-txn');
+  btn.disabled = true;
+  btn.textContent = 'Verifying…';
+
+  const txnData = {
+    name: currentSubmission.name,
+    phone: currentSubmission.phone,
+    transaction: txnId,
+    timestamp: new Date().toISOString(),
+    type: 'payment_confirmation'
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    cache: 'no-cache',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(txnData)
+  })
+  .then(() => {
+    document.getElementById('modal-step-2').style.display = 'none';
+    document.getElementById('modal-step-3').style.display = 'block';
+  })
+  .catch(err => {
+    console.error('Txn Error!', err);
+    btn.disabled = false;
+    btn.textContent = 'Confirm Reservation';
+  });
+}
+
 function closeModal() {
   document.getElementById('payment-modal').classList.remove('show');
+  // Reset modal for next time
+  setTimeout(() => {
+    document.getElementById('modal-step-1').style.display = 'block';
+    document.getElementById('modal-step-2').style.display = 'none';
+    document.getElementById('modal-step-3').style.display = 'none';
+  }, 500);
 }
 

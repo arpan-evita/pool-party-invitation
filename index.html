@@ -469,23 +469,55 @@
 <div class="modal-overlay" id="payment-modal">
   <div class="modal-content reveal-modal">
     <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="confirm-icon">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="confirm-title">Application Received.</div>
-    <div class="confirm-msg">
-      Our team will review your profile and confirm your spot within 12–24 hours.<br><br>
-      <div class="upi-box">
-        <strong>Step 2: Complete Payment</strong><br>
-        UPI ID: <span class="gold">jeevann462-1@okicici</span>
+    
+    <!-- Step 1: Payment Info -->
+    <div id="modal-step-1">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      <p style="margin-top:20px; font-size:11px; color:var(--cream-dk);">
-          Please pay the amount for your selected tier and share the screenshot on WhatsApp/socials for faster verification.
-      </p>
+      <div class="confirm-title">Application Received.</div>
+      <div class="confirm-msg">
+        Our team will review your profile and confirm your spot within 12–24 hours.<br><br>
+        <div class="upi-box">
+          <strong>Step 2: Complete Payment</strong><br>
+          UPI ID: <span class="gold">jeevann462-1@okicici</span>
+        </div>
+        <p style="margin-top:20px; font-size:11px; color:var(--cream-dk);">
+            Please pay the amount for your selected tier and share the screenshot on WhatsApp/socials for faster verification.
+        </p>
+      </div>
+      <button class="btn-primary" style="margin-top:32px; width:100%; cursor:pointer;" onclick="showStep3()">I have completed the payment →</button>
     </div>
-    <button class="btn-primary" style="margin-top:32px; width:100%; cursor:pointer;" onclick="closeModal()">Close</button>
+
+    <!-- Step 2: Transaction ID -->
+    <div id="modal-step-2" style="display:none;">
+      <div class="confirm-title">Confirm Payment</div>
+      <div class="confirm-msg" style="margin-bottom:24px;">
+        Please enter your 12-digit UPI Transaction ID below to confirm your reservation.
+      </div>
+      <div class="form-row" style="text-align:left;">
+        <label for="txn-id">UPI Transaction ID</label>
+        <input type="text" id="txn-id" placeholder="Enter 12-digit ID" required>
+      </div>
+      <button class="btn-primary" id="btn-confirm-txn" style="margin-top:32px; width:100%; cursor:pointer;" onclick="submitTxn()">Confirm Reservation</button>
+    </div>
+
+    <!-- Step 3: Final Success -->
+    <div id="modal-step-3" style="display:none;">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="confirm-title">Reservation Confirmed!</div>
+      <div class="confirm-msg">
+        Thank you. Your payment details have been submitted. Final event details will be shared on WhatsApp after verification.
+      </div>
+      <button class="btn-primary" style="margin-top:32px; width:100%; cursor:pointer;" onclick="closeModal()">Close</button>
+    </div>
+
   </div>
 </div>
 
