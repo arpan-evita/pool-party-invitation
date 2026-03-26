@@ -458,6 +458,27 @@ section { padding:120px 0; }
   line-height:1;
 }
 
+.btn-ticket {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 32px;
+  background: transparent;
+  border: 1px solid var(--gold-dk);
+  color: var(--gold-lt);
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-ticket:hover {
+  background: var(--gold-dk);
+  color: var(--black);
+}
+
 .ticket-price-note {
   font-size:9px;
   color:var(--gold-dk);
@@ -499,8 +520,8 @@ section { padding:120px 0; }
 .form-section { background:var(--black); }
 
 .form-intro {
-  max-width:520px;
-  margin-bottom:60px;
+  max-width: 800px;
+  margin: 0 auto 60px;
 }
 
 .form-disclaimer {
@@ -520,6 +541,8 @@ section { padding:120px 0; }
   background:var(--black2);
   border:1px solid var(--border);
   padding:52px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .form-row {
