@@ -118,15 +118,7 @@ nav {
     );
 }
 
-/* Horizon glow line */
-.hero-bg::after {
-  content:'';
-  position:absolute;
-  left:0; right:0;
-  top:58%;
-  height:1px;
-  background:linear-gradient(90deg, transparent 0%, rgba(220,160,60,0.4) 20%, rgba(255,200,80,0.7) 50%, rgba(220,160,60,0.4) 80%, transparent 100%);
-}
+/* Horizon glow line removed */
 
 /* Pool / ground band */
 .hero-ground {
