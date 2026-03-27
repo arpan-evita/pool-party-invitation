@@ -6,7 +6,1056 @@
     <title>The 40 Club — Private Sundowner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+/* ─── CSS START ─── */
+:root {
+  --black:    #080705;
+  --black2:   #100e0a;
+  --black3:   #181410;
+  --gold:     #c9a84c;
+  --gold-lt:  #e8c97a;
+  --gold-dk:  #8a6e28;
+  --cream:    #f0e8d8;
+  --cream-dk: #b0a080;
+  --white:    #faf6ee;
+  --border:   rgba(201,168,76,0.18);
+  --border2:  rgba(201,168,76,0.35);
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-body:    'Montserrat', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background:var(--black);
+  color:var(--cream);
+  font-family:var(--ff-body);
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--black); }
+::-webkit-scrollbar-thumb { background:var(--gold-dk); border-radius:2px; }
+
+/* ─── SELECTION ─── */
+::-selection { background:var(--gold-dk); color:var(--cream); }
+
+/* ─── UTILITY ─── */
+.container { width: 95%; margin: 0 auto; padding: 0 40px; }
+.gold { color:var(--gold); }
+.serif { font-family:var(--ff-display); }
+
+/* ─── NOISE OVERLAY ─── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.028;
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* ─── NAV ─── */
+nav {
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(180deg, rgba(8,7,5,0.95) 0%, transparent 100%);
+  backdrop-filter:blur(4px);
+}
+
+.nav-logo {
+  font-family:var(--ff-display);
+  font-size:15px;
+  font-weight:400;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  text-decoration:none;
+}
+
+.nav-cta {
+  font-family:var(--ff-body);
+  font-size:9px;
+  font-weight:400;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+  color:var(--cream-dk);
+  text-decoration:none;
+  border-bottom:1px solid var(--gold-dk);
+  padding-bottom:2px;
+  transition:color .3s, border-color .3s;
+}
+.nav-cta:hover { color:var(--gold); border-color:var(--gold); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  position:relative;
+  overflow:hidden;
+  padding-bottom:100px;
+}
+
+.hero-bg {
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(180,80,10,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 30%, rgba(220,140,20,0.15) 0%, transparent 60%),
+    linear-gradient(180deg,
+      #0e0600 0%,
+      #2a1000 18%,
+      #6b2800 34%,
+      #b85010 50%,
+      #d4800a 62%,
+      #c07830 72%,
+      #8a5820 82%,
+      #1a1005 100%
+    );
+}
+
+.hero-ground {
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:38%;
+  background:linear-gradient(180deg, rgba(180,100,20,0.3) 0%, rgba(10,8,4,0.98) 60%);
+}
+
+.hero-sun {
+  position:absolute;
+  left:50%;
+  top:33%;
+  transform:translate(-50%,-50%);
+  width:80px; height:80px;
+  border-radius:50%;
+  background:radial-gradient(circle, #fffce0 0%, #ffd060 40%, rgba(255,150,30,0) 70%);
+  opacity:0.7;
+  filter:blur(2px);
+}
+
+.hero-sun::before {
+  content:'';
+  position:absolute;
+  inset:-80px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,180,40,0.2) 0%, transparent 65%);
+}
+
+.hero-content {
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 24px;
+}
+
+.hero-eyebrow {
+  font-family:var(--ff-body);
+  font-size:8px;
+  font-weight:400;
+  letter-spacing:0.6em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:28px;
+  opacity:0.8;
+  animation: fadeUp .8s ease both;
+}
+
+.hero-title {
+  font-family:var(--ff-display);
+  font-weight:300;
+  font-size:clamp(42px, 8vw, 80px);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  color:var(--white);
+  margin-bottom:28px;
+  animation: fadeUp .8s .15s ease both;
+}
+
+.hero-title em {
+  font-style:italic;
+  color:var(--gold-lt);
+}
+
+.hero-sub {
+  font-family:var(--ff-body);
+  font-size:11px;
+  font-weight:300;
+  letter-spacing:0.3em;
+  color:var(--cream-dk);
+  text-transform:uppercase;
+  margin-bottom:52px;
+  animation: fadeUp .8s .3s ease both;
+}
+
+.btn-primary {
+  display:inline-block;
+  font-family:var(--ff-body);
+  font-size:9px;
+  font-weight:400;
+  letter-spacing:0.55em;
+  text-transform:uppercase;
+  color:var(--black);
+  background:var(--gold);
+  padding:16px 44px;
+  text-decoration:none;
+  transition:background .3s, color .3s, transform .2s;
+  animation: fadeUp .8s .45s ease both;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-primary::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+}
+
+.btn-primary:hover {
+  background:var(--gold-lt);
+  transform:translateY(-1px);
+}
+
+.hero-note {
+  display:block;
+  margin-top:18px;
+  font-size:9px;
+  letter-spacing:0.25em;
+  color:var(--gold-dk);
+  animation: fadeUp .8s .6s ease both;
+}
+
+/* ─── SECTION BASE ─── */
+section { padding:120px 0; }
+
+.section-label {
+  font-size:7.5px;
+  font-weight:400;
+  letter-spacing:0.6em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.section-label::before {
+  content:'';
+  display:block;
+  width:28px; height:1px;
+  background:var(--gold);
+  opacity:0.5;
+  flex-shrink:0;
+}
+
+.section-title {
+  font-family:var(--ff-display);
+  font-weight:300;
+  font-size:clamp(32px, 5vw, 52px);
+  line-height:1.1;
+  color:var(--white);
+  margin-bottom:20px;
+}
+
+.section-title em {
+  font-style:italic;
+  color:var(--gold-lt);
+}
+
+.section-body {
+  font-size:13px;
+  font-weight:300;
+  line-height:1.85;
+  color:var(--cream-dk);
+  max-width:800px;
+}
+
+.rule {
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--border2), transparent);
+  margin:0;
+}
+
+/* ─── ABOUT ─── */
+.about { background:var(--black2); }
+
+.about-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.about-stat-block {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+
+.stat-cell {
+  background:var(--black3);
+  padding:32px 24px;
+  text-align:center;
+}
+
+.stat-number {
+  font-family:var(--ff-display);
+  font-size:42px;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  display:block;
+  margin-bottom:8px;
+}
+
+.stat-label {
+  font-size:8px;
+  letter-spacing:0.4em;
+  color:var(--cream-dk);
+  text-transform:uppercase;
+}
+
+/* ─── EXPERIENCE ─── */
+.experience { background:var(--black); }
+
+.exp-items {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-top:60px;
+}
+
+.exp-item {
+  background:var(--black2);
+  padding:40px 36px;
+  position:relative;
+  overflow:hidden;
+  transition:background .3s;
+}
+
+.exp-item::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:2px; height:0;
+  background:var(--gold);
+  transition:height .4s ease;
+}
+
+.exp-item:hover { background:var(--black3); }
+.exp-item:hover::before { height:100%; }
+
+.exp-num {
+  font-family:var(--ff-display);
+  font-size:11px;
+  font-weight:300;
+  color:var(--gold-dk);
+  letter-spacing:0.2em;
+  display:block;
+  margin-bottom:18px;
+}
+
+.exp-title {
+  font-family:var(--ff-display);
+  font-size:22px;
+  font-weight:400;
+  color:var(--white);
+  margin-bottom:12px;
+  line-height:1.2;
+}
+
+.exp-desc {
+  font-size:11.5px;
+  font-weight:300;
+  color:var(--cream-dk);
+  line-height:1.75;
+}
+
+/* ─── TICKETS ─── */
+.tickets { background:var(--black2); }
+
+.tickets-note {
+  font-size:10px;
+  letter-spacing:0.2em;
+  color:var(--gold-dk);
+  margin-bottom:56px;
+  font-style:italic;
+  font-family:var(--ff-display);
+}
+
+.ticket-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+
+.ticket-card {
+  background:var(--black3);
+  padding:44px 32px;
+  position:relative;
+  transition:background .3s;
+  display:flex;
+  flex-direction:column;
+}
+
+.ticket-card.featured {
+  background:#130f08;
+}
+
+.ticket-card.featured::after {
+  content:'Most Selected';
+  position:absolute;
+  top:16px; right:16px;
+  font-size:7px;
+  letter-spacing:0.4em;
+  color:var(--black);
+  background:var(--gold);
+  padding:4px 10px;
+  text-transform:uppercase;
+}
+
+.ticket-card:hover { background:var(--black2); }
+
+.ticket-tier {
+  font-size:8px;
+  letter-spacing:0.5em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.ticket-name {
+  font-family:var(--ff-display);
+  font-size:24px;
+  font-weight:400;
+  color:var(--white);
+  margin-bottom:24px;
+  line-height:1.2;
+}
+
+.ticket-price {
+  font-family:var(--ff-display);
+  font-size:36px;
+  font-weight:300;
+  color:var(--gold-lt);
+  margin-bottom:6px;
+  line-height:1;
+}
+
+.btn-ticket {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 32px;
+  background: transparent;
+  border: 1px solid var(--gold-dk);
+  color: var(--gold-lt);
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-ticket:hover {
+  background: var(--gold-dk);
+  color: var(--black);
+}
+
+.ticket-price-note {
+  font-size:9px;
+  color:var(--gold-dk);
+  letter-spacing:0.2em;
+  margin-bottom:28px;
+}
+
+.ticket-divider {
+  height:1px;
+  background:var(--border);
+  margin:24px 0;
+}
+
+.ticket-perks {
+  list-style:none;
+  flex:1;
+}
+
+.ticket-perks li {
+  font-size:11px;
+  font-weight:300;
+  color:var(--cream-dk);
+  padding:6px 0;
+  padding-left:16px;
+  position:relative;
+  line-height:1.5;
+}
+
+.ticket-perks li::before {
+  content:'';
+  position:absolute;
+  left:0; top:13px;
+  width:5px; height:1px;
+  background:var(--gold);
+  opacity:0.6;
+}
+
+/* ─── FORM SECTION ─── */
+.form-section { background:var(--black); }
+
+.form-intro {
+  max-width: 800px;
+  margin: 0 auto 60px;
+}
+
+.form-disclaimer {
+  font-size:11px;
+  font-weight:300;
+  color:var(--gold-dk);
+  font-style:italic;
+  font-family:var(--ff-display);
+  line-height:1.8;
+  margin-top:16px;
+  padding:20px 24px;
+  border-left:2px solid var(--gold-dk);
+  background:rgba(201,168,76,0.04);
+}
+
+.app-form {
+  background:var(--black2);
+  border:1px solid var(--border);
+  padding:52px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-row {
+  margin-bottom:36px;
+}
+
+.form-row-2 {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-bottom:36px;
+}
+
+label {
+  display:block;
+  font-size:8px;
+  font-weight:400;
+  letter-spacing:0.5em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+label span.opt {
+  color:var(--gold-dk);
+  font-size:7px;
+  letter-spacing:0.2em;
+  margin-left:6px;
+  text-transform:none;
+}
+
+label span.note {
+  display:block;
+  font-size:9px;
+  letter-spacing:0.1em;
+  color:var(--cream-dk);
+  text-transform:none;
+  margin-top:3px;
+  font-weight:300;
+  opacity:0.7;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea,
+select {
+  width:100%;
+  background:var(--black3);
+  border:1px solid var(--border);
+  border-bottom:1px solid rgba(201,168,76,0.3);
+  color:var(--cream);
+  font-family:var(--ff-body);
+  font-size:13px;
+  font-weight:300;
+  padding:14px 16px;
+  outline:none;
+  transition:border-color .3s, background .2s;
+  appearance:none;
+  -webkit-appearance:none;
+  border-radius:0;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  border-color:var(--border2);
+  border-bottom-color:var(--gold);
+  background:#1a1610;
+}
+
+input::placeholder,
+textarea::placeholder { color:rgba(176,160,128,0.35); }
+
+select {
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a6e28' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  padding-right:40px;
+}
+
+select option {
+  background:var(--black3);
+  color:var(--cream);
+}
+
+textarea { resize:vertical; min-height:100px; }
+
+/* Ticket radio group */
+.ticket-options {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+
+.ticket-option {
+  position:relative;
+}
+
+.ticket-option input[type="radio"] {
+  position:absolute;
+  opacity:0;
+  width:0; height:0;
+}
+
+.ticket-option label {
+  display:block;
+  background:var(--black3);
+  padding:22px 20px;
+  cursor:pointer;
+  transition:background .2s;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--cream-dk);
+  font-size:12px;
+  font-weight:300;
+  font-family:var(--ff-body);
+}
+
+.ticket-option label strong {
+  display:block;
+  font-family:var(--ff-display);
+  font-size:16px;
+  font-weight:400;
+  color:var(--white);
+  margin-bottom:4px;
+  letter-spacing:0;
+}
+
+.ticket-option label .t-price {
+  display:block;
+  font-family:var(--ff-display);
+  font-size:20px;
+  color:var(--gold);
+  margin-top:10px;
+  font-weight:300;
+}
+
+.ticket-option input:checked + label {
+  background:#1c1608;
+  outline:1px solid var(--gold-dk);
+  outline-offset:-1px;
+}
+
+.ticket-option input:checked + label strong {
+  color:var(--gold-lt);
+}
+
+.ticket-option label:hover { background:#181410; }
+
+.radio-group, .bool-group {
+  display:flex;
+  gap:2px;
+  flex-wrap:wrap;
+}
+
+.radio-opt {
+  position:relative;
+}
+
+.radio-opt input { position:absolute; opacity:0; }
+
+.radio-opt label {
+  display:block;
+  font-size:10px;
+  font-weight:300;
+  letter-spacing:0.2em;
+  text-transform:none;
+  color:var(--cream-dk);
+  padding:9px 18px;
+  border:1px solid var(--border);
+  background:var(--black3);
+  cursor:pointer;
+  transition:all .2s;
+  margin:0;
+}
+
+.radio-opt input:checked + label {
+  background:rgba(201,168,76,0.1);
+  border-color:var(--gold-dk);
+  color:var(--gold-lt);
+}
+
+.radio-opt label:hover {
+  border-color:rgba(201,168,76,0.3);
+  color:var(--cream);
+}
+
+.agreement-row {
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  margin-bottom:36px;
+  padding:20px 24px;
+  border:1px solid var(--border);
+  background:rgba(201,168,76,0.03);
+}
+
+.agreement-row input[type="checkbox"] {
+  width:16px; height:16px; min-width:16px;
+  margin-top:3px;
+  appearance:none;
+  border:1px solid var(--gold-dk);
+  background:transparent;
+  cursor:pointer;
+  position:relative;
+  flex-shrink:0;
+}
+
+.agreement-row input[type="checkbox"]:checked {
+  background:var(--gold-dk);
+}
+
+.agreement-row input[type="checkbox"]:checked::after {
+  content:'';
+  position:absolute;
+  top:2px; left:5px;
+  width:4px; height:8px;
+  border:1px solid var(--black);
+  border-top:none; border-left:none;
+  transform:rotate(45deg);
+}
+
+.agreement-row label {
+  font-size:11px;
+  letter-spacing:0.05em;
+  text-transform:none;
+  color:var(--cream-dk);
+  line-height:1.65;
+  font-weight:300;
+}
+
+.form-section-title {
+  font-family:var(--ff-display);
+  font-size:13px;
+  font-weight:400;
+  color:var(--gold);
+  letter-spacing:0.15em;
+  font-style:italic;
+  margin-bottom:24px;
+  margin-top:48px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+
+.form-section-title:first-child { margin-top:0; }
+
+.btn-submit {
+  width:100%;
+  background:var(--gold);
+  color:var(--black);
+  border:none;
+  font-family:var(--ff-body);
+  font-size:10px;
+  font-weight:400;
+  letter-spacing:0.55em;
+  text-transform:uppercase;
+  padding:20px;
+  cursor:pointer;
+  transition:background .3s, transform .2s;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-submit::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+}
+
+.btn-submit:hover { background:var(--gold-lt); transform:translateY(-1px); }
+.btn-submit:active { transform:translateY(0); }
+.btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* Payment Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+
+.modal-content {
+  background: var(--black2);
+  border: 1px solid var(--border);
+  padding: 60px 40px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: none;
+  border: none;
+  color: var(--gold-lt);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.upi-box {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(201,168,76,0.05);
+  border: 1px dashed var(--gold-dk);
+  border-radius: 4px;
+}
+
+.confirm-icon {
+  width:52px; height:52px;
+  border:1px solid var(--gold-dk);
+  border-radius:50%;
+  margin:0 auto 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.confirm-icon svg { width:20px; height:20px; }
+
+.confirm-title {
+  font-family:var(--ff-display);
+  font-size:32px;
+  font-weight:300;
+  color:var(--gold-lt);
+  margin-bottom:16px;
+  font-style:italic;
+}
+
+.confirm-msg {
+  font-size:12px;
+  font-weight:300;
+  color:var(--cream-dk);
+  line-height:1.8;
+  letter-spacing:0.05em;
+}
+
+@keyframes revealModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal-modal { animation: revealModal 0.5s ease both; }
+
+/* ─── FOOTER ─── */
+footer {
+  padding:60px 0 48px;
+  background:var(--black);
+  border-top:1px solid var(--border);
+}
+
+.footer-inner {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:24px;
+}
+
+.footer-logo {
+  font-family:var(--ff-display);
+  font-size:18px;
+  font-weight:300;
+  color:var(--gold);
+  letter-spacing:0.1em;
+}
+
+.footer-details {
+  text-align:center;
+}
+
+.footer-detail {
+  font-size:9px;
+  letter-spacing:0.35em;
+  color:var(--gold-dk);
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:4px;
+}
+
+.footer-copy {
+  font-size:9px;
+  letter-spacing:0.2em;
+  color:rgba(138,110,40,0.4);
+  text-transform:uppercase;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+@keyframes scrollPulse {
+  0%,100% { opacity:0.3; transform:scaleY(0.8); transform-origin:top; }
+  50%      { opacity:0.7; transform:scaleY(1.1); transform-origin:top; }
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width:720px) {
+  nav { padding:16px 20px; }
+  .container { padding: 0 20px; }
+  .about-grid { grid-template-columns:1fr; gap:40px; }
+  .about-stat-block { grid-template-columns:1fr 1fr; }
+  .exp-items { grid-template-columns:1fr; }
+  .exp-item { padding:32px 28px; }
+  .ticket-grid { grid-template-columns:1fr; }
+  .ticket-options { grid-template-columns:1fr; }
+  .app-form { padding:32px 24px; }
+  .form-row-2 { grid-template-columns:1fr; gap:0; }
+  .form-row-2 > .form-row { margin-bottom:36px; }
+  .footer-inner { flex-direction:column; text-align:center; }
+  .footer-details { order:-1; }
+  section { padding:80px 0; }
+}
+
+@media (max-width:480px) {
+  .ticket-options { grid-template-columns:1fr; }
+  .radio-group { flex-direction:column; }
+  .radio-opt { width:100%; }
+  .radio-opt label { text-align:center; }
+}
+
+.attending-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+.attending-tag {
+  padding: 10px 24px;
+  border: 1px solid var(--border);
+  background: var(--black2);
+  color: var(--gold-lt);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.faq-section {
+  margin-top: 50px;
+  max-width: 800px;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+}
+.faq-q {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  color: var(--gold-lt);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.faq-a {
+  font-size: 13px;
+  color: var(--cream-dk);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+}
+.term-item .exp-title {
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.term-item .muted {
+  font-size: 12px;
+  color: var(--cream-dk);
+  line-height: 1.6;
+}
+    </style>
 </head>
 <body>
 
@@ -16,15 +1065,11 @@
   <a href="#apply" class="nav-cta">Apply for Access</a>
 </nav>
 
-
-<!-- ═══════════════════════════════════════
-     HERO
-════════════════════════════════════════ -->
+<!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="hero-sun"></div>
   <div class="hero-ground"></div>
-
   <div class="hero-content container">
     <p class="hero-eyebrow">March 28 &nbsp;·&nbsp; Near Nandi Hills &nbsp;·&nbsp; 3 PM – 11 PM</p>
     <h1 class="hero-title">
@@ -36,15 +1081,11 @@
     <a href="#apply" class="btn-primary">Apply for Access</a>
     <span class="hero-note">Submission does not guarantee entry &nbsp;·&nbsp; Application only</span>
   </div>
-
 </section>
 
 <div class="rule"></div>
 
-
-<!-- ═══════════════════════════════════════
-     ABOUT
-════════════════════════════════════════ -->
+<!-- ABOUT -->
 <section class="about" id="about">
   <div class="container">
     <div class="about-grid reveal">
@@ -80,7 +1121,7 @@
   </div>
 </section>
 
-<!-- ── CROWD ── -->
+<!-- CROWD -->
 <section class="section crowd" id="crowd" style="background:#0c0c0c;">
   <div class="container reveal">
     <p class="section-label">The Crowd</p>
@@ -97,39 +1138,33 @@
 
 <div class="rule"></div>
 
-<div class="rule"></div>
-
-
-<!-- ═══════════════════════════════════════
-     EXPERIENCE
-════════════════════════════════════════ -->
+<!-- EXPERIENCE -->
 <section class="experience" id="experience">
   <div class="container">
     <div class="reveal">
       <p class="section-label">The Experience</p>
       <h2 class="section-title">What to <em>expect</em></h2>
     </div>
-
     <div class="exp-items reveal">
       <div class="exp-item">
         <span class="exp-num">01</span>
         <div class="exp-title">Private Villa<br>Near Nandi Hills</div>
-        <p class="exp-desc">An exclusive, undisclosed location — a private villa chosen for its setting, atmosphere, and complete privacy. Venue details shared only with confirmed guests.</p>
+        <p class="exp-desc">An exclusive, undisclosed location content details shared only with confirmed guests.</p>
       </div>
       <div class="exp-item">
         <span class="exp-num">02</span>
-        <div class="exp-title">Curated<br>Crowd</div>
-        <p class="exp-desc">Every guest is handpicked. Founders, operators, creatives, and professionals who bring energy, depth, and presence to the room. No randomness.</p>
+        <div class="exp-title">Curated Crowd</div>
+        <p class="exp-desc">Every guest is handpicked. Founders, operators, creatives, and professionals who bring energy.</p>
       </div>
       <div class="exp-item">
         <span class="exp-num">03</span>
-        <div class="exp-title">Sundowner<br>Vibe</div>
-        <p class="exp-desc">Golden hour poolside into a warm evening. Ambient sound, good light, unhurried pacing. The kind of setting that makes conversation effortless.</p>
+        <div class="exp-title">Sundowner Vibe</div>
+        <p class="exp-desc">Golden hour poolside into a warm evening. Ambient sound, good light, unhurried pacing.</p>
       </div>
       <div class="exp-item">
         <span class="exp-num">04</span>
-        <div class="exp-title">Hosted<br>Environment</div>
-        <p class="exp-desc">Thoughtfully hosted from arrival to close. Curated introductions, balanced energy, and a deliberate effort to maintain the quality of every interaction in the room.</p>
+        <div class="exp-title">Hosted Environment</div>
+        <p class="exp-desc">Thoughtfully hosted from arrival to close. Curated introductions and balanced energy.</p>
       </div>
     </div>
   </div>
@@ -137,10 +1172,7 @@
 
 <div class="rule"></div>
 
-
-<!-- ═══════════════════════════════════════
-     TICKETS
-════════════════════════════════════════ -->
+<!-- TICKETS -->
 <section class="tickets" id="tickets">
   <div class="container">
     <div class="reveal">
@@ -148,11 +1180,10 @@
       <h2 class="section-title">Choose your <em>access</em></h2>
       <p class="tickets-note">Payment instructions provided only after application approval.</p>
     </div>
-
     <div class="ticket-grid reveal">
       <div class="ticket-card">
         <div class="ticket-tier">Tier One</div>
-        <div class="ticket-name">Founders<br>Circle</div>
+        <div class="ticket-name">Founders Circle</div>
         <div class="ticket-price">₹9,999</div>
         <div class="ticket-price-note">per person · incl. taxes</div>
         <div class="ticket-divider"></div>
@@ -166,7 +1197,7 @@
       </div>
       <div class="ticket-card featured">
         <div class="ticket-tier">Tier Two</div>
-        <div class="ticket-name">Curated<br>Access</div>
+        <div class="ticket-name">Curated Access</div>
         <div class="ticket-price">₹11,999</div>
         <div class="ticket-price-note">per person · incl. taxes</div>
         <div class="ticket-divider"></div>
@@ -180,15 +1211,15 @@
       </div>
       <div class="ticket-card">
         <div class="ticket-tier">Tier Three</div>
-        <div class="ticket-name">Inner<br>Circle</div>
+        <div class="ticket-name">Inner Circle</div>
         <div class="ticket-price">₹16,666</div>
         <div class="ticket-price-note">per person · incl. taxes</div>
         <div class="ticket-divider"></div>
         <ul class="ticket-perks">
           <li>Everything in Curated Access</li>
           <li>Private pre-event access</li>
-          <li>Curated introductions by host</li>
-          <li>Reserved inner-circle seating</li>
+          <li>Curated introductions</li>
+          <li>Reserved seating</li>
         </ul>
         <a href="#apply" class="btn-ticket">Request Invite</a>
       </div>
@@ -198,53 +1229,40 @@
 
 <div class="rule"></div>
 
-
-
-<!-- ═══════════════════════════════════════
-     APPLICATION FORM
-════════════════════════════════════════ -->
+<!-- APPLICATION FORM -->
 <section class="form-section" id="apply">
   <div class="container">
     <div class="form-intro reveal">
       <p class="section-label">Apply for Access</p>
       <h2 class="section-title">Request an <em>invitation</em></h2>
       <div class="form-disclaimer">
-        Submitting this form does not guarantee entry. Our team will review your profile and confirm selected guests within 12–24 hours. We prioritise maintaining a well-balanced, high-quality guest list.
+        Submitting this form does not guarantee entry. Our team will review your profile and confirm selected guests within 12–24 hours.
       </div>
     </div>
-
     <div class="app-form reveal" id="app-form">
-
-      <!-- Personal -->
       <div class="form-section-title">Personal Details</div>
-
       <div class="form-row-2">
         <div class="form-row" style="margin-bottom:0;">
           <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" placeholder="As on ID" required>
+          <input type="text" id="name" placeholder="As on ID" required>
         </div>
         <div class="form-row" style="margin-bottom:0;">
-          <label for="phone">Phone Number
-            <span class="note">For confirmation and coordination</span>
-          </label>
-          <input type="tel" id="phone" name="phone" placeholder="+91 00000 00000" required>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+91 00000 00000" required>
         </div>
       </div>
-
       <div class="form-row">
         <label for="instagram">Instagram Profile</label>
-        <input type="text" id="instagram" name="instagram" placeholder="@yourhandle" required>
+        <input type="text" id="instagram" placeholder="@yourhandle" required>
       </div>
-
       <div class="form-row">
         <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        <input type="email" id="email" placeholder="you@example.com" required>
       </div>
-
       <div class="form-row-2">
         <div class="form-row" style="margin-bottom:0;">
           <label for="occupation">Occupation</label>
-          <select id="occupation" name="occupation" required>
+          <select id="occupation" required>
             <option value="" disabled selected>Select one</option>
             <option>Founder</option>
             <option>Professional</option>
@@ -255,7 +1273,7 @@
         </div>
         <div class="form-row" style="margin-bottom:0;">
           <label for="age">Age Group</label>
-          <select id="age" name="age" required>
+          <select id="age" required>
             <option value="" disabled selected>Select range</option>
             <option>21–24</option>
             <option>25–28</option>
@@ -264,263 +1282,184 @@
           </select>
         </div>
       </div>
-
-      <!-- Event Details -->
       <div class="form-section-title">Attendance Details</div>
-
       <div class="form-row">
         <label>How did you hear about this?</label>
         <div class="radio-group">
-          <div class="radio-opt">
-            <input type="radio" name="source" id="src-friend" value="Friend">
-            <label for="src-friend">Friend</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="source" id="src-ig" value="Instagram">
-            <label for="src-ig">Instagram</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="source" id="src-host" value="Host">
-            <label for="src-host">Host</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="source" id="src-invite" value="Private Invite">
-            <label for="src-invite">Private Invite</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="source" id="src-other" value="Other">
-            <label for="src-other">Other</label>
-          </div>
+          <div class="radio-opt"><input type="radio" name="source" id="src-friend" value="Friend"><label for="src-friend">Friend</label></div>
+          <div class="radio-opt"><input type="radio" name="source" id="src-ig" value="Instagram"><label for="src-ig">Instagram</label></div>
+          <div class="radio-opt"><input type="radio" name="source" id="src-host" value="Host"><label for="src-host">Host</label></div>
+          <div class="radio-opt"><input type="radio" name="source" id="src-invite" value="Invite"><label for="src-invite">Private Invite</label></div>
         </div>
       </div>
-
       <div class="form-row">
-        <label>Attending with <span class="opt">optional</span></label>
+        <label>Attending with</label>
         <div class="radio-group">
-          <div class="radio-opt">
-            <input type="radio" name="attending" id="att-alone" value="Alone">
-            <label for="att-alone">Alone</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="attending" id="att-1" value="+1">
-            <label for="att-1">+1</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="attending" id="att-2" value="2–3">
-            <label for="att-2">2–3</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="attending" id="att-grp" value="Group">
-            <label for="att-grp">Group</label>
-          </div>
+          <div class="radio-opt"><input type="radio" name="attending" id="att-alone" value="Alone"><label for="att-alone">Alone</label></div>
+          <div class="radio-opt"><input type="radio" name="attending" id="att-1" value="+1"><label for="att-1">+1</label></div>
+          <div class="radio-opt"><input type="radio" name="attending" id="att-grp" value="Group"><label for="att-grp">Group</label></div>
         </div>
       </div>
-
       <div class="form-row">
-        <label for="why">Why do you want to attend? <span class="opt">optional</span></label>
-        <textarea id="why" name="why" placeholder="A line or two is enough…"></textarea>
+        <label for="why">Why do you want to attend?</label>
+        <textarea id="why" placeholder="A line or two is enough…"></textarea>
       </div>
-
-      <!-- Ticket -->
       <div class="form-section-title">Ticket Preference</div>
-
       <div class="form-row">
         <div class="ticket-options">
-          <div class="ticket-option">
-            <input type="radio" name="ticket" id="t1" value="founders" required>
-            <label for="t1">
-              <strong>Founders Circle</strong>
-              Full evening access
-              <span class="t-price">₹9,999</span>
-            </label>
-          </div>
-          <div class="ticket-option">
-            <input type="radio" name="ticket" id="t2" value="curated">
-            <label for="t2">
-              <strong>Curated Access</strong>
-              Priority + premium bar
-              <span class="t-price">₹11,999</span>
-            </label>
-          </div>
-          <div class="ticket-option">
-            <input type="radio" name="ticket" id="t3" value="inner">
-            <label for="t3">
-              <strong>Inner Circle</strong>
-              Full access + introductions
-              <span class="t-price">₹16,666</span>
-            </label>
-          </div>
+          <div class="ticket-option"><input type="radio" name="ticket" id="t1" value="founders" required><label for="t1"><strong>Founders Circle</strong>₹9,999</label></div>
+          <div class="ticket-option"><input type="radio" name="ticket" id="t2" value="curated"><label for="t2"><strong>Curated Access</strong>₹11,999</label></div>
+          <div class="ticket-option"><input type="radio" name="ticket" id="t3" value="inner"><label for="t3"><strong>Inner Circle</strong>₹16,666</label></div>
         </div>
       </div>
-
-      <!-- Comfort -->
       <div class="form-row">
-        <label>Are you comfortable in a curated, intimate environment?</label>
+        <label>Are you comfortable in a curated environment?</label>
         <div class="bool-group">
-          <div class="radio-opt">
-            <input type="radio" name="comfort" id="c-yes" value="Yes" required>
-            <label for="c-yes">Yes, absolutely</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="comfort" id="c-no" value="No">
-            <label for="c-no">Not sure</label>
-          </div>
+          <div class="radio-opt"><input type="radio" name="comfort" id="c-yes" value="Yes" required><label for="c-yes">Yes, absolutely</label></div>
+          <div class="radio-opt"><input type="radio" name="comfort" id="c-no" value="No"><label for="c-no">Not sure</label></div>
         </div>
       </div>
-
-      <!-- Agreement -->
       <div class="agreement-row">
-        <input type="checkbox" id="agree" name="agree" required>
-        <label for="agree">
-          I understand that submitting this form does not guarantee entry. I agree that the host reserves the right to accept or decline any application without explanation. Selected guests will receive payment and confirmation instructions within 12–24 hours.
-        </label>
+        <input type="checkbox" id="agree" required>
+        <label for="agree">I understand that submission does not guarantee entry. I agree to the terms.</label>
       </div>
-
-      <button type="button" class="btn-submit" id="submit-btn" onclick="handleSubmit()">
-        Submit Application
-      </button>
-    </div>
-
+      <button type="button" class="btn-submit" id="submit-btn" onclick="handleSubmit()">Submit Application</button>
     </div>
   </div>
 </section>
 
-<div class="rule"></div>
-
-
-<!-- ── FAQ ── -->
+<!-- FAQ -->
 <section class="section faq" id="faq" style="background:#0c0c0c;">
   <div class="container reveal">
     <p class="section-label">Questions</p>
     <h2 class="section-title">Common<br><em>Questions</em></h2>
     <div class="faq-section">
-      <div class="faq-item">
-        <div class="faq-q">Is this a public event?</div>
-        <div class="faq-a">No. The 40 Club is a private curated gathering hosted by JDELITE.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How will I receive event details?</div>
-        <div class="faq-a">Confirmed guests receive details via WhatsApp after payment verification.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Will the venue location be public?</div>
-        <div class="faq-a">No. Only confirmed guests receive the villa address.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What is the dress code?</div>
-        <div class="faq-a">Smart casual or stylish evening wear.</div>
-      </div>
+      <div class="faq-item"><div class="faq-q">Is this a public event?</div><div class="faq-a">No. The 40 Club is a private curated gathering.</div></div>
+      <div class="faq-item"><div class="faq-q">How will I receive details?</div><div class="faq-a">Confirmed guests receive details via WhatsApp.</div></div>
     </div>
   </div>
 </section>
 
-<div class="rule"></div>
-
-<!-- ── POLICIES ── -->
-<section class="section policies" id="policies">
-  <div class="container reveal">
-    <p class="section-label">Compliance</p>
-    <h2 class="section-title">Terms &<br><em>Conditions</em></h2>
-    <div class="terms-grid">
-      <div class="term-item">
-        <p class="exp-title">Curated Access Policy</p>
-        <p class="muted">The host reserves the right to approve or decline reservations.</p>
-      </div>
-      <div class="term-item">
-        <p class="exp-title">Payment Policy</p>
-        <p class="muted">Payment confirms reservation request. Not a guarantee of admission.</p>
-      </div>
-      <div class="term-item">
-        <p class="exp-title">Guest Conduct</p>
-        <p class="muted">Guests must maintain respectful behaviour at all times.</p>
-      </div>
-      <div class="term-item">
-        <p class="exp-title">Media Consent</p>
-        <p class="muted">Photography and videography may occur at the event.</p>
-      </div>
-      <div class="term-item">
-        <p class="exp-title">Liability Disclaimer</p>
-        <p class="muted">Guests attend at their own discretion. The host is not liable for personal property or incidents.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-
-<!-- ═══════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-inner">
       <div class="footer-logo">The 40 Club</div>
-      <div class="footer-details">
-        <span class="footer-detail">March 28 &nbsp;·&nbsp; Near Nandi Hills</span>
-        <span class="footer-detail">3 PM – 11 PM &nbsp;·&nbsp; Invite Only</span>
-      </div>
       <span class="footer-copy">© 2025 · Private Event</span>
     </div>
   </div>
 </footer>
 
-<!-- ── PAYMENT MODAL ── -->
+<!-- PAYMENT MODAL -->
 <div class="modal-overlay" id="payment-modal">
   <div class="modal-content reveal-modal">
     <button class="modal-close" onclick="closeModal()">×</button>
-    
-    <!-- Step 1: Payment Info -->
     <div id="modal-step-1">
-      <div class="confirm-icon">
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <div class="confirm-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2"/></svg></div>
       <div class="confirm-title">Application Received.</div>
-      <div class="confirm-msg">
-        Our team will review your profile and confirm your spot within 12–24 hours.<br><br>
-        <div class="upi-box">
-          <strong>Step 2: Complete Payment</strong><br>
-          UPI ID: <span class="gold">jeevann462-1@okicici</span>
-        </div>
-        <p style="margin-top:20px; font-size:11px; color:var(--cream-dk);">
-            Please pay the amount for your selected tier and share the screenshot on WhatsApp/socials for faster verification.
-        </p>
-      </div>
-      <button class="btn-primary" style="margin-top:32px; width:100%; cursor:pointer;" onclick="showStep3()">I have completed the payment →</button>
+      <div class="confirm-msg">Please pay the amount for your selected tier.<br><br><div class="upi-box">UPI ID: <span class="gold">jeevann462-1@okicici</span></div></div>
+      <button class="btn-primary" style="margin-top:32px; width:100%;" onclick="showStep3()">I have completed payment →</button>
     </div>
-
-    <!-- Step 2: Transaction ID -->
     <div id="modal-step-2" style="display:none;">
       <div class="confirm-title">Confirm Payment</div>
-      <div class="confirm-msg" style="margin-bottom:24px;">
-        Please enter your 12-digit UPI Transaction ID below to confirm your reservation.
-      </div>
-      <div class="form-row" style="text-align:left;">
-        <label for="txn-id">UPI Transaction ID</label>
-        <input type="text" id="txn-id" placeholder="Enter 12-digit ID" required>
-      </div>
-      <button class="btn-primary" id="btn-confirm-txn" style="margin-top:32px; width:100%; cursor:pointer;" onclick="submitTxn()">Confirm Reservation</button>
+      <div class="confirm-msg">Enter your 12-digit UPI Transaction ID.</div>
+      <div class="form-row" style="text-align:left;"><label for="txn-id">Transaction ID</label><input type="text" id="txn-id" placeholder="12-digit ID"></div>
+      <button class="btn-primary" id="btn-confirm-txn" style="margin-top:32px; width:100%;" onclick="submitTxn()">Confirm Reservation</button>
     </div>
-
-    <!-- Step 3: Final Success -->
     <div id="modal-step-3" style="display:none;">
-      <div class="confirm-icon">
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 10l4 4 8-8" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
       <div class="confirm-title">Submitted</div>
-      <div class="confirm-msg">
-        Our member will contact you soon. Final event details will be shared after verification.
-      </div>
-      <button class="btn-primary" style="margin-top:32px; width:100%; cursor:pointer;" onclick="closeModal()">Close</button>
+      <div class="confirm-msg">Our member will contact you soon.</div>
+      <button class="btn-primary" style="margin-top:32px; width:100%;" onclick="closeModal()">Close</button>
     </div>
-
   </div>
 </div>
 
-<script src="main.js"></script>
+<script>
+/* ─── JS START ─── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwktAVPJzT9wr30ovbaZ_citruI7Nun-tFxgIf94CTPTbiUbeF4tfCBSeIVulKda8bsCw/exec';
+let currentSubmission = { name: '', phone: '' };
+
+// Scroll Reveals
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Form Handling
+function handleSubmit() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const instagram = document.getElementById('instagram').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const ticket = document.querySelector('input[name="ticket"]:checked');
+  
+  if (!name || !phone || !instagram || !email || !ticket) {
+    alert('Please fill out all required fields');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  currentSubmission = { name, phone };
+
+  const formData = {
+    name, phone, instagram, email,
+    tier: ticket.value,
+    timestamp: new Date().toISOString()
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(formData).toString()
+  }).finally(() => {
+    document.getElementById('payment-modal').classList.add('show');
+    btn.textContent = 'Application Sent';
+  });
+}
+
+function showStep3() {
+  document.getElementById('modal-step-1').style.display = 'none';
+  document.getElementById('modal-step-2').style.display = 'block';
+}
+
+function submitTxn() {
+  const txnId = document.getElementById('txn-id').value.trim();
+  if (!txnId) { alert('Please enter ID'); return; }
+
+  const btn = document.getElementById('btn-confirm-txn');
+  btn.disabled = true;
+  
+  const txnData = {
+    name: currentSubmission.name,
+    phone: currentSubmission.phone,
+    transaction: txnId,
+    type: 'payment_confirmation'
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(txnData).toString()
+  }).finally(() => {
+    document.getElementById('modal-step-2').style.display = 'none';
+    document.getElementById('modal-step-3').style.display = 'block';
+  });
+}
+
+function closeModal() {
+  document.getElementById('payment-modal').classList.remove('show');
+}
+</script>
 </body>
 </html>
