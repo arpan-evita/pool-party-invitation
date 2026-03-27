@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 40 Club — Guest List Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #dfc27d;
+      --black: #0a0a0a;
+      --dark-gray: #1a1a1a;
+      --cream: #f3f0e8;
+      --cream-dk: #d1cdc2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 60px 40px;
+      text-align: center;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+    }
+
+    h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .search-box {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 12px 20px;
+      color: var(--cream);
+      border-radius: 4px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-refresh {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 12px 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-refresh:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(201, 168, 76, 0.05);
+      padding: 15px 20px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    td {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-paid { background: rgba(76, 201, 126, 0.15); color: #4cc97e; }
+    .status-pending { background: rgba(201, 168, 76, 0.15); color: var(--gold); }
+
+    .loader {
+      display: none;
+      justify-content: center;
+      padding: 60px;
+      color: var(--gold);
+      font-style: italic;
+      letter-spacing: 0.1em;
+      font-size: 0.8rem;
+    }
+
+    .no-data {
+      padding: 60px;
+      text-align: center;
+      color: var(--cream-dk);
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Guest Registry</h1>
+  <p class="subtitle">The 40 Club — Administration</p>
+</header>
+
+<div class="container">
+  <div class="controls">
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search by name, phone, or tier..." oninput="filterData()">
+    </div>
+    <button class="btn-refresh" onclick="fetchData()">Refresh List</button>
+  </div>
+
+  <div class="table-container">
+    <div id="loader" class="loader">FETCHING GUEST LIST...</div>
+    <table id="leads-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Guest Name</th>
+          <th>Phone</th>
+          <th>Tier</th>
+          <th>Txn ID</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="leads-body">
+        <!-- Data populated here -->
+      </tbody>
+    </table>
+    <div id="no-data" class="no-data" style="display:none;">No applications found yet.</div>
+  </div>
+</div>
+
+<script>
+  // Re-use current Script URL
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwktAVPJzT9wr30ovbaZ_citruI7Nun-tFxgIf94CTPTbiUbeF4tfCBSeIVulKda8bsCw/exec';
+  let guestData = [];
+
+  async function fetchData() {
+    const loader = document.getElementById('loader');
+    const tbody = document.getElementById('leads-body');
+    const noData = document.getElementById('no-data');
+    
+    loader.style.display = 'flex';
+    tbody.innerHTML = '';
+    noData.style.display = 'none';
+
+    try {
+      const response = await fetch(SCRIPT_URL);
+      const data = await response.json();
+      
+      if (!Array.isArray(data)) {
+        if (data.status === 'error') throw new Error(data.message);
+        throw new Error('Invalid data format');
+      }
+      
+      guestData = data.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+      renderTable(guestData);
+      
+    } catch (error) {
+      console.error('Fetch Error:', error);
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#b43c3c; padding:40px;">Failed to load data. Make sure Script is deployed as "Anyone".</td></tr>`;
+    } finally {
+      loader.style.display = 'none';
+      if (guestData.length === 0) noData.style.display = 'block';
+    }
+  }
+
+  function renderTable(data) {
+    const tbody = document.getElementById('leads-body');
+    tbody.innerHTML = data.map(item => {
+      // Find txn id in either key format (transaction_id or transactionid)
+      const txn = item.transaction_id || item.transaction || '';
+      const isPaid = txn && txn.trim() !== '';
+      
+      const date = item.timestamp ? (new Date(item.timestamp).toLocaleDateString() + ' ' + new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})) : '—';
+      
+      return `
+        <tr>
+          <td style="color:var(--cream-dk); font-size:0.75rem;">${date}</td>
+          <td style="font-weight:600;">${item.name || '—'}</td>
+          <td>${item.phone || '—'}</td>
+          <td style="color:var(--gold);">${item.tier || '—'}</td>
+          <td style="font-family:monospace; font-size:0.8rem;">${txn || '—'}</td>
+          <td>
+            <span class="status ${isPaid ? 'status-paid' : 'status-pending'}">
+              ${isPaid ? 'Paid' : 'Pending'}
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function filterData() {
+    const term = document.getElementById('search').value.toLowerCase();
+    const filtered = guestData.filter(item => 
+      (item.name && String(item.name).toLowerCase().includes(term)) ||
+      (item.phone && String(item.phone).toLowerCase().includes(term)) ||
+      (item.tier && String(item.tier).toLowerCase().includes(term))
+    );
+    renderTable(filtered);
+  }
+
+  // Initial load
+  fetchData();
+</script>
+
+</body>
+</html>
