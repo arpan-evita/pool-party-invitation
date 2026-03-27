@@ -1464,6 +1464,12 @@ function handleSubmit() {
 
   const formData = {
     name, phone, instagram, email,
+    occupation: document.getElementById('occupation').value,
+    age: document.getElementById('age').value,
+    source: document.querySelector('input[name="source"]:checked')?.value || '',
+    attending: document.querySelector('input[name="attending"]:checked')?.value || '',
+    why: document.getElementById('why').value,
+    comfort: document.querySelector('input[name="comfort"]:checked')?.value || '',
     tier: ticket.value,
     timestamp: new Date().toISOString()
   };
