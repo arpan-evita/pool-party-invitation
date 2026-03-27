@@ -1,4 +1,9 @@
-import { kv } from '@vercel/kv';
+import { createClient } from '@vercel/kv';
+
+const kv = createClient({
+  url: process.env.KV_REST_API_URL || process.env.REDIS_URL || process.env.KV_URL,
+  token: process.env.KV_REST_API_TOKEN || process.env.REDIS_TOKEN,
+});
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -34,7 +39,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ status: 'success' });
   } catch (error) {
-    console.error('KV Error:', error);
-    return res.status(500).json({ error: 'Database error' });
+    console.error('KV Error (Check Environment Variables):', error.message);
+    return res.status(500).json({ error: 'Database connection failed. Ensure KV is connected in Vercel.' });
   }
 }
