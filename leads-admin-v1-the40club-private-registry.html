@@ -102,7 +102,7 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      min-width: 1400px; /* Force scroll for wide data */
+      min-width: 1800px; /* Stronger force for many fields */
     }
 
     th {
@@ -117,9 +117,9 @@
     }
 
     td {
-      padding: 15px 12px;
+      padding: 18px 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       white-space: nowrap;
     }
 
@@ -164,10 +164,15 @@
       font-style: italic;
     }
 
-    /* Custom Scrollbar */
-    .table-wrapper::-webkit-scrollbar { height: 6px; }
-    .table-wrapper::-webkit-scrollbar-track { background: var(--black); }
-    .table-wrapper::-webkit-scrollbar-thumb { background: var(--gold-dk); border-radius: 3px; }
+    /* Custom Gold Scrollbar */
+    .table-wrapper::-webkit-scrollbar { height: 10px; }
+    .table-wrapper::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+    .table-wrapper::-webkit-scrollbar-thumb { 
+      background: var(--gold); 
+      border-radius: 10px;
+      border: 2px solid var(--black);
+    }
+    .table-wrapper::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
 
   </style>
 </head>
