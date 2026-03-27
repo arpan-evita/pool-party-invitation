@@ -1428,7 +1428,7 @@ footer {
 
 <script>
 /* ─── JS START ─── */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwktAVPJzT9wr30ovbaZ_citruI7Nun-tFxgIf94CTPTbiUbeF4tfCBSeIVulKda8bsCw/exec';
+const SCRIPT_URL = '/api/submit';
 let currentSubmission = { name: '', phone: '' };
 
 // Scroll Reveals
@@ -1476,9 +1476,8 @@ function handleSubmit() {
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString()
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
   }).finally(() => {
     document.getElementById('payment-modal').classList.add('show');
     btn.textContent = 'Application Sent';
@@ -1506,9 +1505,8 @@ function submitTxn() {
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(txnData).toString()
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(txnData)
   }).finally(() => {
     document.getElementById('modal-step-2').style.display = 'none';
     document.getElementById('modal-step-3').style.display = 'block';
