@@ -239,7 +239,7 @@
       
     } catch (error) {
       console.error('Fetch Error:', error);
-      tbody.innerHTML = `<tr><td colspan="14" style="text-align:center; color:#b43c3c; padding:40px;">Failed to load data. Ensure Vercel KV is connected and you have Redeployed.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="14" style="text-align:center; color:#b43c3c; padding:40px;">Failed to load data. Ensure REDIS_URL is connected and you have Redeployed.</td></tr>`;
     } finally {
       loader.style.display = 'none';
       if (guestData.length === 0) noData.style.display = 'block';

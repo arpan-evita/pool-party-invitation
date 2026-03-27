@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/arpan-evita/pool-party-invitation#readme",
   "dependencies": {
-    "@vercel/kv": "^3.0.0"
+    "redis": "^5.11.0"
   }
 }
